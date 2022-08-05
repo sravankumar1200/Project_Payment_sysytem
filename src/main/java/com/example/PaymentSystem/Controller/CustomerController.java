@@ -5,8 +5,11 @@ import com.example.PaymentSystem.Services.Customerservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.PublicKey;
+import java.util.List;
+
 @RestController
-@RequestMapping("/hi")
+@RequestMapping("/customer")
 public class CustomerController {
     @Autowired
     private Customerservices customerservices;
@@ -25,6 +28,10 @@ public class CustomerController {
     public Customer get(@RequestParam(name = "id") Long id){
         return customerservices.getCustomerbyId(id);
 
+    }
+    @GetMapping("/getall")
+    public List<Customer> show(){
+        return customerservices.getall();
     }
 
 

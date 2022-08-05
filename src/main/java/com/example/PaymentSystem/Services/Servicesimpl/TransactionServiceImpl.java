@@ -68,12 +68,12 @@ logger.info("We are going to save data "+transactionDTO);
                 return transactionRepository.save(t);
 
             }
-            if(transactionDTO.getAmount()>c.getClr_balance() && c.getOd()=="yes" ){
+            else if(transactionDTO.getAmount()>c.getClr_balance() && c.getOd().equals("yes")){
                 c.setClr_balance(c.getClr_balance()-transactionDTO.getAmount());
                 return transactionRepository.save(t);
             }
             else{
-                c.setClr_balance(transactionDTO.getAmount());
+                c.setClr_balance(c.getClr_balance());
                 return null;
             }
 

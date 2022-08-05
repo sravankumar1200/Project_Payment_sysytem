@@ -6,6 +6,8 @@ import com.example.PaymentSystem.Services.Customerservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceImpl implements Customerservices {
     @Autowired
@@ -21,5 +23,10 @@ public class CustomerServiceImpl implements Customerservices {
     @Override
     public Customer getCustomerbyId(Long id) {
         return(customerRepository.findById(id).orElseThrow(()->new RuntimeException("not found")));
+    }
+
+    @Override
+    public List<Customer> getall() {
+        return customerRepository.findAll();
     }
 }
