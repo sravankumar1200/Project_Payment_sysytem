@@ -21,14 +21,24 @@ public class Bank {
         return (  (long) (Math.random()*Math.pow(10,10)));
     }
     @Id
-    private Long bic=Bank.gen();
+    //private Long bic=Bank.gen();
+    private String bic;
+
     private String bankname;
 
-    public Long getBic() {
+    public String getBic() {
         return bic;
     }
 
-    public void setBic(Long bic) {
-        this.bic = Bank.gen();
+    public void setBic(String bic) {
+        this.bic = bic;
+    }
+
+    public String getBankname() {
+        return bankname;
+    }
+
+    public void setBankname(String bankname) {
+        this.bankname = bankname;
     }
 }

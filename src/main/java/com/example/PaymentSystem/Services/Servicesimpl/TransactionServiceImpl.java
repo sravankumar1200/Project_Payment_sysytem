@@ -62,18 +62,18 @@ logger.info("We are going to save data "+transactionDTO);
             t.setMessage(msg);
             t.setTransfertype(ty);
 
-            if(transactionDTO.getAmount()<=c.getClr_balance()){
+            if(transactionDTO.getAmount()<=c.getClearbalance()){
                 // dto.setAmount(c.getClr_balance()-dto.getAmount());;
-                c.setClr_balance(c.getClr_balance()-transactionDTO.getAmount());
+                c.setClearbalance(c.getClearbalance()-transactionDTO.getAmount());
                 return transactionRepository.save(t);
 
             }
-            else if(transactionDTO.getAmount()>c.getClr_balance() && c.getOd().equals("yes")){
-                c.setClr_balance(c.getClr_balance()-transactionDTO.getAmount());
+            else if(transactionDTO.getAmount()>c.getClearbalance() && c.getOverdraftflag().equals("yes")){
+                c.setClearbalance(c.getClearbalance()-transactionDTO.getAmount());
                 return transactionRepository.save(t);
             }
             else{
-                c.setClr_balance(c.getClr_balance());
+                c.setClearbalance(c.getClearbalance());
                 return null;
             }
 
