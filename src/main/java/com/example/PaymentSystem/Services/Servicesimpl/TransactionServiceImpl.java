@@ -44,7 +44,7 @@ logger.info("We are going to save data "+transactionDTO);
          TransactionTBL t=new TransactionTBL();
         //    TransactionDTO dto =new TransactionDTO();
         Message msg= messageRepository.findById("CORT").get();
-        Transfertype ty= transfertypeRepository.findById("C").get();
+        Transfertype ty= transfertypeRepository.findById("Customer Transfer").get();
 
             Customer c = customerRepository.findById(transactionDTO.getCustid()).get();
             logger.info("We have received  customer data "+c);

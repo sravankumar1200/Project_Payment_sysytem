@@ -12,9 +12,9 @@ import javax.persistence.*;
 public class TransactionDTO {
    // @Id
    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long custid;
+    private String custid;
     //@Transient
-    private Long bic;
+    private String bic;
     //@Transient
     private Double amount;
 

@@ -17,10 +17,10 @@ public class BankServiceImpl implements BankServices {
         return bankRepository.save(bank);
     }
 
-    @Override
-    public Bank getbyID(Long id) {
-        return(bankRepository.findById(id).orElseThrow(()->new RuntimeException("not found")));
-        }
+   @Override
+   public Bank getbyID(String id) {
+       return(bankRepository.findById(id).orElseThrow(()->new RuntimeException("not found")));
+       }
 
     }
 

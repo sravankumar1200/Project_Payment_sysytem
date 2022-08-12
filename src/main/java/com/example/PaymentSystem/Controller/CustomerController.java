@@ -25,7 +25,7 @@ public class CustomerController {
         return("done");
     }
     @GetMapping("/getbyId")
-    public Customer get(@RequestParam(name = "id") Long id){
+    public Customer get(@RequestParam(name = "id") String id){
         return customerservices.getCustomerbyId(id);
 
     }

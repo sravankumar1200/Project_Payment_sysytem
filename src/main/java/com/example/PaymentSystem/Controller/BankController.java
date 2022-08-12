@@ -22,7 +22,7 @@ public class BankController {
         return(ResponseEntity.status(HttpStatus.OK).body("OK"));
     }
     @GetMapping("/show")
-    public Bank getbank(@RequestParam(name = "id") Long id){
+    public Bank getbank(@RequestParam(name = "id")String id){
         return(bankServices.getbyID(id));
     }
 
