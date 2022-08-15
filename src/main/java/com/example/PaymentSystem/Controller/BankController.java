@@ -25,5 +25,7 @@ public class BankController {
     public Bank getbank(@RequestParam(name = "id")String id){
         return(bankServices.getbyID(id));
     }
+    
+
 
 }

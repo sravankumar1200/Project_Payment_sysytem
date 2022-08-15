@@ -17,6 +17,9 @@ public class TransactionDTO {
     private String bic;
     //@Transient
     private Double amount;
+    private  String messagecode;
+    private String transfertypecode;
+
 
 
 }

@@ -11,12 +11,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Scanner;
 
 
 @Service()
 @Transactional
 public class TransactionServiceImpl implements TransactionServices {
+    public static boolean sch(String name) throws FileNotFoundException {
+        name=name.toUpperCase();
+        Scanner s=null;
+        try {
+            s=new Scanner(new FileInputStream("C:\\Users\\Administrator\\Downloads\\sdnlist.txt"));
+
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while(s.hasNextLine()){
+            String line=s.nextLine();
+            if(line.contains(name)) {
+                return true;
+            }
+        }
+        return false;
+
+
+    }
+
     private static Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     @Autowired
@@ -40,11 +64,16 @@ public class TransactionServiceImpl implements TransactionServices {
 
     @Override
     public TransactionTBL SaveTransaction(TransactionDTO transactionDTO) {
-logger.info("We are going to save data "+transactionDTO);
+
+        logger.info("We are going to save data "+transactionDTO);
          TransactionTBL t=new TransactionTBL();
         //    TransactionDTO dto =new TransactionDTO();
-        Message msg= messageRepository.findById("CORT").get();
-        Transfertype ty= transfertypeRepository.findById("Customer Transfer").get();
+       // Message msg= messageRepository.findById("CORT").get();
+        Message ms=messageRepository.findById(transactionDTO.getMessagecode()).get();
+
+       // Transfertype ty= transfertypeRepository.findById("Customer Transfer").get();
+        Transfertype tyy=transfertypeRepository.findById(transactionDTO.getTransfertypecode()).get();
+
 
             Customer c = customerRepository.findById(transactionDTO.getCustid()).get();
             logger.info("We have received  customer data "+c);
@@ -59,23 +88,33 @@ logger.info("We are going to save data "+transactionDTO);
             t.setCustomer(c);
             t.setBank(b);
             t.setAmount(transactionDTO.getAmount());
-            t.setMessage(msg);
-            t.setTransfertype(ty);
+            t.setMessage(ms);
+            t.setTransfertype(tyy);
+            try {
 
-            if(transactionDTO.getAmount()<=c.getClearbalance()){
-                // dto.setAmount(c.getClr_balance()-dto.getAmount());;
-                c.setClearbalance(c.getClearbalance()-transactionDTO.getAmount());
-                return transactionRepository.save(t);
+
+                if (transactionDTO.getAmount() <= c.getClearbalance() && !sch(c.getAccountholdername())) {
+                    // dto.setAmount(c.getClr_balance()-dto.getAmount());;
+                    c.setClearbalance(c.getClearbalance() - transactionDTO.getAmount());
+                    return transactionRepository.save(t);
+
+                } else if (transactionDTO.getAmount() > c.getClearbalance() && c.getOverdraftflag().toString().equals("yes") && !sch(c.getAccountholdername().toString())) {
+                    c.setClearbalance(c.getClearbalance() - transactionDTO.getAmount());
+                    System.out.println("mmmmmmmm");
+                    return transactionRepository.save(t);
+
+                }
+                else{
+                    c.setClearbalance(c.getClearbalance());
+                    return null;
+                }
+            }
+            catch (FileNotFoundException e){
+                e.printStackTrace();
 
             }
-            else if(transactionDTO.getAmount()>c.getClearbalance() && c.getOverdraftflag().equals("yes")){
-                c.setClearbalance(c.getClearbalance()-transactionDTO.getAmount());
-                return transactionRepository.save(t);
-            }
-            else{
-                c.setClearbalance(c.getClearbalance());
-                return null;
-            }
+            return null;
+
 
 
 
