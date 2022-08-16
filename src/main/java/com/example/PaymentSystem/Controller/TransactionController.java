@@ -21,14 +21,15 @@ public class TransactionController {
     private TransactionTBL transaction;
     private TransactionDTO transactionDTO;
     @PostMapping("/make")
-    public ResponseEntity<String> SaveTransaction(@RequestBody TransactionDTO transactionDTO){
+    public TransactionTBL SaveTransaction(@RequestBody TransactionDTO transactionDTO){
         logger.info("Received Data"+transactionDTO);
-        transactionServices.SaveTransaction(transactionDTO);
+        return(transactionServices.SaveTransaction(transactionDTO));
 
         //transactionServices.transfermoney(transaction.getAmount(),transaction.getTransactionid());
 
         //transactionServices
-       return(ResponseEntity.status(HttpStatus.OK).body("OK"));
+      // return(ResponseEntity.status(HttpStatus.OK).body("OK"));
+
 
 
     }

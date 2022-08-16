@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -70,7 +71,6 @@ public class TransactionServiceImpl implements TransactionServices {
         //    TransactionDTO dto =new TransactionDTO();
        // Message msg= messageRepository.findById("CORT").get();
         Message ms=messageRepository.findById(transactionDTO.getMessagecode()).get();
-
        // Transfertype ty= transfertypeRepository.findById("Customer Transfer").get();
         Transfertype tyy=transfertypeRepository.findById(transactionDTO.getTransfertypecode()).get();
 
@@ -90,6 +90,10 @@ public class TransactionServiceImpl implements TransactionServices {
             t.setAmount(transactionDTO.getAmount());
             t.setMessage(ms);
             t.setTransfertype(tyy);
+            t.setReciver_ac_name(transactionDTO.getReciver_ac_name());
+            t.setReciver_ac_no(transactionDTO.getReciver_ac_no());
+           // t.setTransferdate(transactionDTO.getTransferdate());
+
             try {
 
 
@@ -100,7 +104,7 @@ public class TransactionServiceImpl implements TransactionServices {
 
                 } else if (transactionDTO.getAmount() > c.getClearbalance() && c.getOverdraftflag().toString().equals("yes") && !sch(c.getAccountholdername().toString())) {
                     c.setClearbalance(c.getClearbalance() - transactionDTO.getAmount());
-                    System.out.println("mmmmmmmm");
+                    //System.out.println("mmmmmmmm");
                     return transactionRepository.save(t);
 
                 }
