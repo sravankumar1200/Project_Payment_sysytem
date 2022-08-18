@@ -8,8 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,6 +26,7 @@ public class TransactionTBL {
     private String reciver_ac_name;
     private Long reciver_ac_no;
     private double amount;
+    private Date transferdate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="custid", referencedColumnName = "custid" )

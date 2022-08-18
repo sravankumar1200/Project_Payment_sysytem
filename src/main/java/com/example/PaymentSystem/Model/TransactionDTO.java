@@ -20,6 +20,7 @@ public class TransactionDTO {
 
 
 
+
  private Double amount;
     private  String messagecode;
     private String transfertypecode;
