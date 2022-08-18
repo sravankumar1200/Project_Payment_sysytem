@@ -21,7 +21,7 @@ public class BankController {
         bankServices.SaveBank(bank);
         return(ResponseEntity.status(HttpStatus.OK).body("OK"));
     }
-    @GetMapping("/show")
+    @GetMapping("/getbyId")
     public Bank getbank(@RequestParam(name = "id")String id){
         return(bankServices.getbyID(id));
     }

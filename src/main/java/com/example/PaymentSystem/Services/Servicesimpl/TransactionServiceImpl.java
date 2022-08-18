@@ -1,5 +1,4 @@
 package com.example.PaymentSystem.Services.Servicesimpl;
-
 import com.example.PaymentSystem.Model.*;
 //import com.example.PaymentSystem.Model.TransactionDTO;
 import com.example.PaymentSystem.Repository.*;
@@ -92,17 +91,18 @@ public class TransactionServiceImpl implements TransactionServices {
             t.setTransfertype(tyy);
             t.setReciver_ac_name(transactionDTO.getReciver_ac_name());
             t.setReciver_ac_no(transactionDTO.getReciver_ac_no());
+            t.setTransferdate(new Date());
            // t.setTransferdate(transactionDTO.getTransferdate());
 
             try {
 
 
-                if (transactionDTO.getAmount() <= c.getClearbalance() && !sch(c.getAccountholdername())) {
+                if (transactionDTO.getAmount() <= c.getClearbalance() && !sch(t.getReciver_ac_name())) {
                     // dto.setAmount(c.getClr_balance()-dto.getAmount());;
                     c.setClearbalance(c.getClearbalance() - transactionDTO.getAmount());
                     return transactionRepository.save(t);
 
-                } else if (transactionDTO.getAmount() > c.getClearbalance() && c.getOverdraftflag().toString().equals("yes") && !sch(c.getAccountholdername().toString())) {
+                } else if (transactionDTO.getAmount() > c.getClearbalance() && c.getOverdraftflag().toString().equals("yes") && !sch(t.getReciver_ac_name())) {
                     c.setClearbalance(c.getClearbalance() - transactionDTO.getAmount());
                     //System.out.println("mmmmmmmm");
                     return transactionRepository.save(t);

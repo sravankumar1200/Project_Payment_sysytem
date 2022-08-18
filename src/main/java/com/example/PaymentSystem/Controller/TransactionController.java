@@ -2,6 +2,7 @@ package com.example.PaymentSystem.Controller;
 
 import com.example.PaymentSystem.Model.TransactionTBL;
 import com.example.PaymentSystem.Model.TransactionDTO;
+import com.example.PaymentSystem.Repository.TransactionRepository;
 import com.example.PaymentSystem.Services.TransactionServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,8 @@ public class TransactionController {
     private TransactionServices transactionServices;
     private TransactionTBL transaction;
     private TransactionDTO transactionDTO;
+    @Autowired
+    private TransactionRepository transactionRepository;
     @PostMapping("/make")
     public TransactionTBL SaveTransaction(@RequestBody TransactionDTO transactionDTO){
         logger.info("Received Data"+transactionDTO);
@@ -36,6 +39,15 @@ public class TransactionController {
     @GetMapping("/getall")
     public List<TransactionTBL> show(){
         return transactionServices.Getall();
+    }
+    @GetMapping("/messagecode")
+    public List<Object> rohit(){
+        return (transactionRepository.getmessagecode());
+
+    }
+    @GetMapping("/transfercode")
+    public List<Object> sravan(){
+        return (transactionRepository.gettransfercode());
     }
 
 }
